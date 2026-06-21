@@ -16,6 +16,8 @@ en la **durcissant** (grill-me) puis en la **faisant vérifier** par un agent in
 - `docs/features/entries-list/` — le dossier pré-mâché de la page exemple : `analysis.md` (analyse
   technique) + `browser/` (capture d'écran + snapshot).
 - `analysis/entry-points.md` — par où on arrive sur chaque page (points d'entrée).
+- `skills-a-explorer/` — copies de skills keiko (create-spec, grill-me, tracer, chaîne de production de
+  code…) à parcourir si tu es curieux. Voir son `README.md`. Ce ne sont pas les skills de la séance.
 - `legacy/` — l'appli à spécifier (Ketchup Compta), en submodule.
 
 ## Prérequis
