@@ -1,25 +1,86 @@
 # Séance 2 - Faire des specs · Fiche Trainer
 
+> **Cette fiche est auto-suffisante.** Tu n'as pas besoin de savoir coder ni de connaître le projet.
+> Si le sujet t'est étranger, lis d'abord la section **« Ce que tu dois comprendre avant d'animer »** :
+> elle te donne le vocabulaire, le déroulé exact, et surtout le **corrigé** (les bonnes réponses
+> attendues) pour que tu saches à tout moment si ta cohorte est sur les rails.
+
+---
+
 ## 👁️ En un coup d'œil
 
-- **Objectif** : faire produire au PM une spec fonctionnelle **durcie puis vérifiée**, en lui faisant
-  vivre les trois temps : v1 à la main → grill-me sur analyse fournie → vérification par agent tiers.
+- **Objectif** : faire produire à chaque PM une spec fonctionnelle de qualité, en la **durcissant** puis
+  en la **faisant vérifier**.
+- **Public** : Product Managers (non techniques).
 - **Format** : binôme, chacun sa machine. ~45 min, mains au clavier ~30 min.
-- **Durée** : 45 min (time-box **strict** - voir Notes animateur).
-- **Prérequis (S0)** : Ketchup Compta tourne sur `localhost:8080` (`admin`/`admin123`), `claude` répond,
-  `gh auth status` OK. **Dossier pré-mâché récupérable** (branche à puller OU dossier fourni).
+- **Durée** : 45 min, time-box **strict**.
+- **Page support** : « Toutes les Écritures » de l'app Ketchup Compta (`/modules/entries/list.php`).
+- **Livrables du PM** : `spec-v1.md` (brouillon), puis `spec.md` (durcie et vérifiée).
 
-## 🎓 Ce qu'on veut faire apprendre
+---
 
-- **Compétence cible** : transformer un besoin flou en une spec qu'un dev - ou un agent - peut construire
-  sans revenir voir le PM, et savoir la **faire fiabiliser**.
-- **Les gestes** : (1) explorer une page ; (2) se faire **grill-er** une question à la fois et
-  **trancher** ; (3) faire **vérifier** son livrable par un agent tiers et corriger.
-- **Les pièces** (montée en exigence) : `spec-v1.md` (à la main) → `spec.md` durcie → `spec.md` **vérifiée**.
-- **Le reframe à ancrer** :
-  > Une spec ne se rédige pas, elle se **durcit** puis se **fait vérifier**. Sans analyse tu spécules ;
-  > avec le grill-me tu **tranches** ; avec un regard tiers tu **fiabilises**. Le PM **possède chaque
-  > décision**.
+## 🧠 Ce que tu dois comprendre avant d'animer
+
+### En une phrase
+Une **spec** (spécification) décrit, en langage métier, **ce que fait une fonctionnalité** : ce que
+l'utilisateur voit, fait, et ce qui doit se passer dans tous les cas (y compris les cas d'erreur). C'est
+le document qu'un développeur lit pour construire la fonctionnalité **sans avoir à revenir poser des
+questions**.
+
+### L'idée clé de la séance (le « reframe »)
+> Une bonne spec ne s'écrit pas d'un coup : elle se **durcit**. On part d'un brouillon, puis on se fait
+> **interroger** (le « grill-me ») pour combler les trous, puis on la **fait vérifier** par un tiers.
+
+Les PM vont le vivre en 3 temps : (1) ils écrivent une spec vite fait tout seuls, (2) un outil les
+cuisine question par question pour la solidifier, (3) un agent indépendant la relit et pointe ce qui
+manque.
+
+### Le petit lexique (suffisant pour animer)
+- **Legacy** : l'ancienne application (ici en PHP) qu'on est en train de moderniser.
+- **Touchpoint** : un « point d'action » de la page (une URL ou une action déclenchée), par ex. ouvrir la
+  page, soumettre un formulaire, cliquer un lien.
+- **Périmètre (scope) in / out** : est-ce que ce touchpoint fait partie de **cette** page (✅ in-scope) ou
+  est-ce juste un **lien vers une autre page** (❌ out-of-scope, navigation) ?
+- **Point d'entrée** : par **où on arrive** sur la page (le menu, un bouton « Retour », une redirection).
+  C'est l'inverse d'un touchpoint (qui, lui, part de la page).
+- **`analysis.md`** : l'**analyse technique déjà préparée** par le tech lead. Elle décrit factuellement
+  ce que la page fait (sa logique, ses données, ses cas d'erreur). **C'est la vérité terrain.** Le PM
+  s'appuie dessus, il n'a pas à la produire.
+- **grill-me** : le fait de se faire **interroger sans relâche**, une question à la fois, pour forcer à
+  trancher chaque détail.
+- **Gherkin** : une façon d'écrire des scénarios de test en langage simple (« Étant donné… Quand…
+  Alors… »). Pas besoin d'être technique pour les lire.
+- **« hors legacy »** : une décision que le PM veut ajouter mais **qui n'existe pas** dans l'app actuelle.
+  On la note à part pour ne pas la confondre avec l'existant.
+- **PO (Product Owner)** : le rôle que joue le PM pendant le grill-me (celui qui tranche le besoin).
+
+### ⭐ LE point à ne pas rater : le piège des rôles
+Pendant le grill-me, l'outil va **probablement suggérer** une règle « selon le rôle de l'utilisateur »
+(par ex. « cacher le bouton *Nouvelle écriture* aux profils en lecture seule »). **C'est un piège
+volontaire et c'est le cœur pédagogique de la séance.**
+
+La vérité : **l'application n'a AUCUNE notion de rôle.** Tous les utilisateurs connectés ont exactement
+les mêmes droits. Le PM doit le **découvrir** en vérifiant l'`analysis.md`, et **trancher** :
+- soit on reproduit l'existant (tout le monde voit tout) ;
+- soit on décide d'ajouter des rôles, mais alors c'est une **décision produit « hors legacy »**, à noter
+  à part (pas comme si ça existait déjà).
+
+👉 Si tu ne retiens qu'une chose pour animer : **« ne jamais inventer ce que le code ne fait pas ;
+vérifier, puis décider en connaissance de cause. »**
+
+---
+
+## ✅ Checklist avant la séance (5-10 min avant)
+
+Fais-la pour toi, puis vérifie-la avec chaque binôme au démarrage.
+
+- [ ] L'app tourne : ouvrir <http://localhost:8080> → la page de connexion s'affiche (login `admin` /
+      `admin123`). Sinon : relancer le Docker du keiko (`docker compose up -d` dans le dossier keiko).
+- [ ] Chaque PM a **`claude`** qui répond et **`gh auth status`** OK (acquis en S0).
+- [ ] Chaque PM a **accès en lecture au repo `dojo-ai-pm-s2`** (sinon le clone échouera - voir Pannes).
+- [ ] Toi, tu as relu le **corrigé du grill-me** plus bas (le tableau des décisions attendues).
+
+---
 
 ## ⏱️ Déroulé minuté
 
@@ -31,87 +92,121 @@
 | 33-44 min  | **Étape 3** - vérification par un agent tiers (relecteur)                |
 | 44-45 min  | Clôture + question de synthèse                                           |
 
-## 🧵 Le fil rouge : l'objectif du trainee
+---
 
-Produire une `spec.md` durcie **et vérifiée** pour la page « Toutes les Écritures », et nommer ce que le
-grill-me + l'agent ont attrapé. Page cible : `/modules/entries/list.php`.
+## Étape 1 - La spec « à la main » (~12 min)
+
+**Objectif :** produire vite une spec naïve (`spec-v1.md`) pour, plus tard, mesurer tout ce qui lui
+manquait. Elle DOIT être imparfaite : c'est voulu.
+
+**Ce que tu dis au groupe :**
+> « Vous venez de recevoir un ticket : spécifier la page *Toutes les Écritures*. Réflexe normal : on ouvre
+> la page, on demande à Claude de l'écrire. En 10 minutes vous aurez quelque chose qui *paraît* bien.
+> Gardez-le précieusement : on va le malmener juste après. »
+
+**Ce que le PM fait (exactement) :**
+1. Ouvre <http://localhost:8080>, se connecte (`admin` / `admin123`), va dans **Écritures → Toutes les
+   écritures**.
+2. Dans Claude Code (sans aucune commande spéciale) : « *Explique-moi ce que fait la page
+   /modules/entries/list.php.* »
+3. Puis : « *Écris-moi la spec fonctionnelle de cette page.* »
+4. Colle la réponse dans un fichier **`spec-v1.md`** et le garde ouvert.
+
+**Ce que le PM doit voir :** une spec courte (objectif + quelques cas d'usage). Normal qu'elle **oublie**
+des choses : les permissions, la liste vide, les cas d'erreur, le périmètre précis, la pagination.
+
+**Réussite de l'étape :** un fichier `spec-v1.md` existe. **Ne pas chercher la qualité ici.**
+
+**Si ça coince :** voir le tableau Pannes. Tiens la barre à ~12 min - coupe court si besoin, l'important
+est d'avoir un brouillon à comparer.
+
+> 💡 Résiste à l'envie d'aider les PM à « bien faire » leur v1. Plus elle est naïve, plus l'étape 2 frappe.
 
 ---
 
-## Étape 1 - Spec v1 à la main
+## Étape 2 - Le grill-me (~18 min) · LE CŒUR DE LA SÉANCE
 
-- **La pièce produite** : `spec-v1.md` (rapide, incomplète par construction).
-- **Pitch à lire au groupe** : « Avant tout outil : ouvrez la page, demandez à Claude de vous écrire la
-  spec. En 10 minutes vous aurez quelque chose qui *paraît* bien. Gardez-le : on va le défoncer après. »
-- **Consigne binôme** : chacun fait sa v1 ; comparez vite à l'oral ce que Claude a mis (et pas mis).
-- **La bonne manière de faire** : Claude Code **seul**, sans skill, sans analyse. Explorer (2-3 questions),
-  puis « Écris-moi la spec fonctionnelle de cette page » → `spec-v1.md`. Ne pas fignoler.
-- **Ce que la pièce apporte** : le **point de comparaison** qui rend visibles les trous aux étapes 2 et 3.
-- **Le geste exercé** : explorer une page + première formalisation (geste S1 réappliqué).
+**Objectif :** durcir la spec en se faisant interroger, sur la base de l'analyse technique fournie. Le PM
+**tranche** chaque décision (et n'invente rien).
 
-<details><summary>💡 Tips animateur</summary>
+**Ce que tu dis au groupe :**
+> « Maintenant on vous donne l'analyse technique déjà faite par le tech lead. Vous lancez un outil qui va
+> vous cuisiner, une question à la fois, en vous proposant une réponse à chaque fois. Votre boulot :
+> **trancher** - et surtout, ne jamais affirmer ce que le code ne fait pas. »
 
-- Résiste à l'envie de « bien faire » la v1. Plus elle est naïve, plus le contraste est fort.
-- Trous typiques laissés par Claude : accès/permissions, liste vide, cas d'erreur, in/out scope.
-</details>
+**Ce que le PM fait (exactement) :**
+1. Récupère le dossier de la séance (clone du dépôt dojo) :
+   ```bash
+   git clone --recurse-submodules https://github.com/Matigon-theodo/dojo-ai-pm-s2.git
+   cd dojo-ai-pm-s2
+   ```
+2. Vérifie qu'il a bien le dossier fourni : `ls docs/features/entries-list/` (doit montrer `analysis.md`
+   et `browser/`).
+3. Lance Claude Code **dans ce dossier**, puis tape : **`/spec-grill-session entries-list`**
+4. Répond aux questions **une par une**. À chaque fois l'outil propose une réponse : valider, ajuster, ou
+   trancher autrement.
+5. À la fin, l'outil écrit **`docs/features/entries-list/spec.md`**. Le PM le relit.
+
+**Ce que le PM doit voir :** l'outil pose des questions une à une (pas un mur de texte), puis produit un
+`spec.md` structuré : Pourquoi (+ schéma), Démo (capture), Cas d'utilisation, **Précisions issues du
+grill-me**, table des **Touchpoints** (✅/❌), **Points d'entrée**, et des **scénarios de validation**.
+
+### 🔑 Le corrigé du grill-me (garde-le sous les yeux)
+Voici les décisions **attendues** pour cette page. Si un PM s'en écarte sans raison, recadre-le vers
+l'`analysis.md`.
+
+| Question posée (en substance) | Bonne décision attendue |
+| --- | --- |
+| Les liens « Nouvelle écriture », « Voir », n° de pièce sont-ils dans le périmètre ? | **Non** : ce sont des liens de **navigation** vers la page d'édition → hors-scope (❌). La page elle-même est le seul touchpoint ✅. |
+| ⭐ Faut-il masquer des actions selon le **rôle** de l'utilisateur ? | **Piège.** L'app **n'a aucun rôle**. On reproduit l'existant (ouvert à tout utilisateur connecté) ; toute idée de rôle est notée en **« Décision produit (hors legacy) »**. |
+| Que se passe-t-il si la **liste est vide** / la recherche ne donne rien ? | Message « **Aucune écriture trouvée.** » et « Total : 0 écritures ». |
+| Sur quoi porte la **recherche** ? | Sur le **libellé OU le numéro de pièce** (correspondance partielle). |
+| Que propose le **filtre journal** ? | Seulement les **journaux actifs**, valeur par défaut « Tous ». |
+| Comment marche la **pagination** ? | **30** écritures par page ; une page hors limites est ramenée à une page valide. |
+| Le **tri** est-il configurable ? | **Non** : de la plus récente à la plus ancienne. |
+| Et si l'utilisateur **n'est pas connecté** ? | Redirigé vers la connexion, message « Veuillez vous connecter. ». |
+| Quels sont les **points d'entrée** (par où on arrive) ? | Le menu « Toutes les écritures », et depuis l'écran d'édition : « Retour à la liste », « Annuler », et le cas « écriture introuvable ». |
+
+**Réussite de l'étape :** un `spec.md` existe, avec une section **« Décisions produit (hors legacy) »**
+contenant la décision sur les rôles, une table de touchpoints, et des scénarios.
+
+> 💡 Si le PM répond « technique » (parle de code, de SQL…), recadre : « réponds en métier : *qui* voit
+> *quoi*, et *qu'est-ce qui s'affiche* ? ». S'il bloque, son binôme l'aide à formuler une **décision**,
+> pas une solution technique.
 
 ---
 
-## Étape 2 - Le grill-me avec l'usine · LE CŒUR
+## Étape 3 - Faire vérifier par un agent tiers (~10 min)
 
-- **La pièce produite** : `spec.md` durcie (Pourquoi + Mermaid, Démo, Cas d'utilisation, **Précisions
-  issues du grill-me** dont une sous-section **« Décisions produit (hors legacy) »**, table Touchpoints
-  ✅/❌, **Points d'entrée**, Gherkin 100 %).
-- **Pitch à lire au groupe** : « On vous donne l'analyse technique déjà faite. Claude va vous cuisiner,
-  une question à la fois, et vous recommander une réponse. Votre job : **trancher** - et ne jamais
-  inventer ce que le code ne fait pas. »
-- **Consigne binôme** : chacun mène son grill-me ; si l'un bloque, l'autre l'aide à formuler une
-  **décision métier** (pas une réponse technique).
-- **La bonne manière de faire** : cloner le dépôt `dojo-ai-pm-s2`, lancer
-  **`/spec-grill-session entries-list`**, répondre **une question à la fois**, laisser Claude écrire
-  `spec.md`. **Ni tracer ni agent-browser** - tout l'amont est fourni.
-- **Ce que la pièce apporte** : une spec **actionnable** où chaque cas limite et chaque accès a été
-  tranché par le PM, et où les ajouts « hors legacy » sont isolés.
-- **Le geste exercé** : se faire grill-er, **vérifier ses hypothèses contre la vérité terrain**, et
-  posséder ses décisions.
+**Objectif :** découvrir la valeur d'un **regard indépendant**. Un agent relit le **vrai code** et pointe
+ce que le PM (et le grill-me) ont laissé passer.
 
-<details><summary>💡 Tips animateur - LE moment pédagogique (permissions)</summary>
+**Ce que tu dis au groupe :**
+> « Vous pensez avoir une bonne spec ? On la passe à un agent dont le seul job est de relire le vrai code
+> et de **trouver vos trous**. C'est exactement ce qu'on veut faire **avant** de donner la spec aux devs. »
 
-- ⚠️ **Le piège volontaire** : Claude va probablement recommander une règle « à base de rôles » (cacher
-  « Nouvelle écriture » à un lecteur). **Or l'app n'a AUCUN rôle** : la table `users` n'a pas de colonne
-  `role`, aucun `require_role` (le `CLAUDE.md` du legacy le prétend à tort - l'`analysis.md` dit vrai).
-- C'est **le** moment à faire vivre : le PM doit **confronter la reco à l'`analysis.md`**, constater
-  qu'il n'y a pas de rôles, et **trancher** : garder le comportement legacy (ouvert à tous) et noter
-  « introduire des rôles » comme **décision produit hors legacy**, clairement séparée. S'il l'inscrit
-  comme du legacy, l'agent de l'étape 3 le recalera - et c'est tant mieux.
-- Autres branches : **liste vide**, **in/out scope** des liens vers `edit.php` (navigation = hors-scope),
-  recherche (libellé + n° pièce), pagination, `journal_id` invalide → liste vide.
-- Si le clone coince, débloquez-vous à deux (le binôme est le filet). Ne pas perdre 5 min sur git.
-</details>
+**Ce que le PM fait :** à la fin de l'étape 2, l'outil propose de lancer la vérification. Le PM la laisse
+tourner, **lit le rapport**, puis **corrige** `spec.md` avec Claude. **Une seule boucle de correction
+suffit.**
 
----
+**Ce que le PM doit voir :** un rapport qui rend un **verdict** (OK / À corriger) et, pour chaque écart,
+**cite le fichier de code concerné**. Exemples d'écarts typiques et fréquents :
+- un cas d'erreur de l'analyse sans scénario de test correspondant ;
+- un point d'entrée oublié ;
+- une décision « hors legacy » écrite comme si elle existait dans l'app (l'agent la recalera - **et c'est
+  exactement le but**) ;
+- une affirmation invérifiable dans le code.
 
-## Étape 3 - Vérification par un agent tiers
+**Comment guider la correction :** demande au PM de **reprendre chaque remarque** et de dire à Claude
+« corrige ce point dans spec.md ». Pas besoin d'un verdict parfait : l'important est le **geste** (faire
+vérifier, comprendre, corriger).
 
-- **La pièce produite** : `spec.md` **vérifiée** (corrigée d'après le rapport de l'agent).
-- **Pitch à lire au groupe** : « Vous pensez avoir une bonne spec ? On la passe à un agent qui relit le
-  vrai code et cherche vos trous. C'est exactement ce qu'on veut **avant** de la donner aux devs. »
-- **Consigne binôme** : lire le rapport ensemble, repérer la remarque la plus surprenante, corriger.
-- **La bonne manière de faire** : le skill lance un sous-agent de vérification qui relit le vrai code
-  legacy (sans tracer) ; lire son verdict et ses recommandations (chacune cite un fichier legacy), puis
-  corriger `spec.md` avec Claude.
-- **Ce que la pièce apporte** : la **fiabilité**. Un regard indépendant attrape ce que l'auteur ne voit
-  plus (touchpoint manqué, cas non couvert, point d'entrée mal qualifié, décision mal étiquetée).
-- **Le geste exercé** : **faire valider son travail par un tiers adversarial** et itérer.
+**Réussite de l'étape :** le PM a lancé la vérification, lu le rapport, et traité (ou noté explicitement)
+les remarques.
 
-<details><summary>💡 Tips animateur</summary>
-
-- Dédramatise le FAIL : l'agent est **fait pour trouver des trous**. Un rapport rouge = de la valeur, pas
-  un échec personnel.
-- Insiste sur le fait qu'il **relit le code réel** (pas la spec) : c'est ça qui rend le regard crédible.
-- Time-box : vise **une** boucle de correction, pas la perfection. L'objectif est le **geste**.
-- La vérif relit le **vrai code legacy** (présent via le submodule du clone) ; elle n'utilise pas le tracer.
-</details>
+> 💡 **Dédramatise un rapport sévère** : l'agent est *fait* pour trouver des trous. Un rapport rouge = de
+> la valeur trouvée, pas un échec. Insiste : il relit le **code réel**, pas la spec - c'est ça qui rend
+> son regard crédible.
 
 ---
 
@@ -119,23 +214,54 @@ grill-me + l'agent ont attrapé. Page cible : `/modules/entries/list.php`.
 > - le PM a une **`spec.md` durcie** avec une section « Précisions issues du grill-me » contenant au moins
 >   une **décision « hors legacy »** proprement isolée (typiquement les rôles) ;
 > - le PM a **lancé la vérification** (le relecteur indépendant) et traité (ou explicitement noté) ses remarques ;
-> - le PM cite **≥ 3 trous** comblés vs sa v1.
+> - le PM sait citer **au moins 3 trous** comblés par rapport à sa `spec-v1.md`.
+
+---
+
+## 🆘 Pannes & déblocage (le plus important pour un trainer)
+
+| Symptôme | Cause probable | Déblocage |
+| --- | --- | --- |
+| `/spec-grill-session` n'apparaît pas dans Claude (taper `/`) | Claude n'est pas lancé **dans le dossier `dojo-ai-pm-s2`** | Quitter Claude, faire `cd dojo-ai-pm-s2`, relancer `claude`. Le skill vit dans `.claude/skills/` du dossier. |
+| `git clone` échoue (« repository not found » / accès refusé) | Le PM n'a pas encore l'**accès lecture** au repo privé | Le faire travailler **en binôme** sur la machine de celui qui a accès, le temps de régler l'accès. |
+| Le dossier `legacy/` est vide après le clone | Submodule non récupéré | `git submodule update --init` dans le dossier cloné. |
+| `localhost:8080` ne répond pas | L'app n'est pas démarrée | Relancer le Docker du keiko. À défaut, l'étape 1 peut se faire en demandant à Claude de **lire le code** de la page. |
+| L'outil écrit la spec **sans poser de questions** | Il a « foncé » | Lui dire : « *Pose-moi les questions une par une avant d'écrire la spec.* » |
+| Le PM répond en **termes techniques** | Confusion de rôle | Recadrer : « réponds en métier : qui voit quoi, qu'est-ce qui s'affiche ? » |
+| Le PM **invente** des rôles/permissions | Le piège a fonctionné… trop bien | Faire ouvrir `analysis.md` : « où est-il écrit qu'il y a des rôles ? ». Le ranger en « hors legacy ». |
+| La vérification parle d'une erreur `bin/tracer` | Quelqu'un a tenté de lancer le tracer | Normal : le dojo **n'utilise pas** le tracer. Rassurer, ignorer, la vérif lit le code directement. |
+| On déborde sur le temps | Étape 1 ou rédaction trop léchée | Couper le fignolage. Le grill-me (étape 2) est prioritaire ; l'étape 3 = une seule boucle. |
+
+---
+
+## ❓ Questions que ta cohorte va poser (et tes réponses)
+
+- **« C'est quoi un *touchpoint* ? »** → Un point d'action de la page (une URL ou une action déclenchée).
+  Ici : afficher la liste, filtrer. Les liens vers la page d'édition n'en sont pas (c'est de la navigation).
+- **« Pourquoi on n'invente pas les rôles, ce serait mieux ? »** → Une spec de **migration** décrit
+  d'abord l'existant. Les améliorations sont légitimes mais se notent **à part** (« hors legacy »), pour
+  ne pas tromper le dev sur ce que fait l'app aujourd'hui.
+- **« Pourquoi ne pas demander direct la spec à Claude (étape 1) et s'arrêter là ? »** → Justement, on le
+  fait à l'étape 1 - et on voit que ça laisse des trous. Le grill-me et la vérif servent à les combler.
+- **« L'analyse technique, qui l'a faite ? »** → Le tech lead, en amont, avec l'outillage keiko. Le PM
+  part de ce résultat ; il n'a pas à le produire (ce sera l'objet d'autres séances).
+- **« À quoi servent les scénarios *Gherkin* ? »** → Ce sont les cas concrets qu'un testeur (ou un agent)
+  suivra pour valider. Couverture visée : tous les cas, y compris erreurs et cas limites.
 
 ---
 
 ## 🗒️ Notes animateur
 
-- **Time-box strict.** La S1 a glissé « big time » : annonce les durées, tiens l'étape 1 à ~12 min
-  (chrono visible). Le grill-me reste le gros du budget ; l'étape 3 vise **une** boucle de correction.
-- **L'arc = durcir PUIS vérifier.** Les deux « aha » : (2) le grill-me te fait trancher ce que tu
-  ignorais ; (3) l'agent tiers attrape ce qu'il te reste. Ne sacrifie aucun des deux ; coupe plutôt dans
-  le fignolage de rédaction.
-- **Récupération du dojo** : les PM clonent le dépôt `dojo-ai-pm-s2` (`git clone --recurse-submodules`)
-  au début de l'étape 2 - pas avant (l'étape 1 doit rester mains nues).
-- **Pré-requis formateur (fait en amont)** : `docs/features/entries-list/` rempli (`analysis.md` avec
-  call graph réel + `browser/`), et `analysis/entry-points.md` à jour. Les PM ne touchent jamais à
-  `bin/tracer` ni à `agent-browser`.
-- **Le piège des rôles est intentionnel** et c'est le cœur pédagogique de l'étape 2 - ne le « corrige »
-  pas à l'avance dans l'`analysis.md` : il y est documenté honnêtement (aucun rôle), c'est au PM de le
-  découvrir et de trancher.
-- **Tease S3** : « Avec ce `spec.md` vérifié, on pourrait générer un proto cliquable - prochaine séance. »
+- **Time-box strict.** Annonce les durées, garde un chrono visible. L'étape 1 ne doit pas dépasser
+  ~12 min. Le grill-me est le gros du budget ; l'étape 3 vise **une** boucle de correction.
+- **L'arc = durcir PUIS vérifier.** Deux moments « aha » : (2) le grill-me te fait trancher ce que tu
+  ignorais ; (3) l'agent tiers attrape ce qu'il te reste. Ne sacrifie aucun des deux.
+- **Le piège des rôles est intentionnel.** Ne le « corrige » pas à l'avance : il est documenté
+  honnêtement dans l'`analysis.md` (aucun rôle), c'est au PM de le découvrir et de trancher.
+- **Récupération du dojo** : les PM clonent `dojo-ai-pm-s2` au **début de l'étape 2**, pas avant
+  (l'étape 1 doit rester mains nues).
+- **Pour les curieux** : le dossier `skills-a-explorer/` contient des copies de skills keiko (create-spec,
+  grill-me, tracer, chaîne de production de code, agent de vérification) à parcourir. Ce ne sont **pas**
+  les skills de la séance ; à proposer en bonus à ceux qui finissent en avance.
+- **Tease S3** : « Avec ce `spec.md` vérifié, on pourra générer un prototype cliquable - ce sera la
+  prochaine séance. »
