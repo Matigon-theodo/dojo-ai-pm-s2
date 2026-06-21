@@ -42,7 +42,15 @@ Ouvre le `SKILL.md` de chacun. Ils suivent la **chaîne de modernisation**, de l
 - **commit/** — créer des commits atomiques (Conventional Commits), ordonnés par couche de dépendance.
 - **open-pr/** — ouvrir une PR avec description liée au plan.
 
+## Agents (référence)
+
+- **spec-verifier.md** — l'agent de vérification « de production » du keiko (7 contrôles : couverture des
+  touchpoints, qualité de l'analyse, cas d'usage, points d'entrée, couverture Gherkin 100 %, etc.). Il
+  relit le code legacy **et** s'appuie sur le tracer/graphe. C'est pourquoi, dans le dojo (sans tracer
+  embarqué), la S2 utilise une version **allégée du même principe**, lancée automatiquement par
+  `spec-grill-session` à l'Étape 3 : un relecteur indépendant qui lit le code directement, sans tracer.
+
 ---
 
 Curieux d'aller plus loin ? Le keiko complet contient bien d'autres skills (découverte des touchpoints,
-PRD, ADR, revue de code, etc.). Demande à ton tech lead pour y accéder.
+PRD, ADR, revue de code, etc.) et agents. Demande à ton tech lead pour y accéder.
