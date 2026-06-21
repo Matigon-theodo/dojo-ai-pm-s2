@@ -58,7 +58,7 @@ graph LR
 
 - **Périmètre** : la page couvre la consultation, le filtrage et la pagination. Les liens « Nouvelle
   écriture », « Voir » et n° de pièce sont de la **navigation** vers l'écran d'édition (hors périmètre).
-- **Recherche** : porte sur le **libellé OU le numéro de pièce** (sous-chaîne, insensible à la casse).
+- **Recherche** : porte sur le **libellé OU le numéro de pièce** (correspondance sur une sous-chaîne du texte saisi).
 - **Filtre journal** : seuls les **journaux actifs** sont proposés ; valeur par défaut « Tous ».
 - **Tri** : **non configurable** — date décroissante, puis ordre de saisie décroissant.
 - **Pagination** : **30 écritures par page** ; une page demandée hors bornes est ramenée dans
