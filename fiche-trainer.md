@@ -26,6 +26,9 @@ départ. On ne vise pas un document qu'on retouchera dix fois pendant le dévelo
 spec proche du « right first time » (bonne du premier coup) : assez complète et tranchée pour qu'un dev,
 ou un agent, la construise sans revenir poser des questions.
 
+Plus largement, c'est un pas vers la vision du programme : passer d'un PM qui spécifie seul dans son coin
+à un PM qui s'appuie sur une « usine IA » qu'il bâtit avec ses devs.
+
 ---
 
 ## 🧠 Ce que tu dois comprendre avant d'animer

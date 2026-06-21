@@ -6,8 +6,8 @@ Tu es PM sur la migration de Ketchup Compta, une appli de comptabilité qu'on fa
 (PHP) vers du neuf. Le tech lead te demande la spec de la page « Toutes les Écritures », pour qu'un dev
 puisse la reconstruire sans revenir te voir toutes les cinq minutes.
 
-Tu vas t'y prendre en trois temps : tu écris une première spec à la main, tu la reprends avec l'outil de
-l'usine, puis tu la fais vérifier. Tu travailles en binôme, chacun sur sa machine : si un setup coince,
+Tu vas t'y prendre en trois temps : tu écris une première spec à la main, tu la montes en qualité avec
+l'outil de l'usine, puis tu la fais vérifier. Tu travailles en binôme, chacun sur sa machine : si un setup coince,
 débloquez-vous à deux.
 
 ---
@@ -36,7 +36,8 @@ Ne dépasse pas 12 minutes : à ce stade on ne cherche pas la perfection.
 ## Étape 2 - Reprends la spec avec l'outil de l'usine (~18 min)
 
 Cette fois tu pars de l'analyse technique déjà préparée par le tech lead, et tu utilises l'outil qui
-t'interroge point par point.
+t'interroge point par point. C'est le grill-me, une technique popularisée par Matt Pocock : faire remonter
+les questions maintenant, au moment de la spec, plutôt que de les subir plus tard pendant le dev.
 
 ### 2.1 Récupère le dossier de la séance
 
@@ -79,7 +80,7 @@ ls docs/features/entries-list/
 
 ---
 
-## Étape 3 - Fais vérifier ta spec (~12 min)
+## Étape 3 - Fais vérifier ta spec (~10 min)
 
 Avant de donner ta spec à un dev, tu la fais relire par un agent qui, lui, va lire le vrai code et
 chercher tes oublis.
@@ -106,7 +107,7 @@ ou corriger, que tu n'aurais pas vu en écrivant la spec seul ?
 ---
 
 > ## ✅ Tu as réussi si…
-> - tu as une `spec.md` durcie, avec une section « Précisions issues du grill-me » où tu as tranché des
+> - tu as une `spec.md` de qualité, avec une section « Précisions issues du grill-me » où tu as tranché des
 >   décisions toi-même (dont au moins une décision « hors legacy » mise à part) ;
 > - tu as lancé la vérification (le relecteur indépendant) et traité son rapport ;
 > - tu peux citer au moins 3 trous comblés depuis ta v1.
