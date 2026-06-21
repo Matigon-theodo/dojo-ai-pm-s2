@@ -1,0 +1,112 @@
+# Séance 2 - Faire des specs · Fiche Trainee
+
+## La situation
+
+Tu es PM sur la migration de Ketchup Compta, une appli de comptabilité qu'on fait passer du vieux code
+(PHP) vers du neuf. Le tech lead te demande la spec de la page « Toutes les Écritures », pour qu'un dev
+puisse la reconstruire sans revenir te voir toutes les cinq minutes.
+
+Tu vas t'y prendre en trois temps : tu écris une première spec à la main, tu la reprends avec l'outil de
+l'usine, puis tu la fais vérifier. Tu travailles en binôme, chacun sur sa machine : si un setup coince,
+débloquez-vous à deux.
+
+---
+
+## Étape 1 - Une première spec, vite fait (~12 min)
+
+Tu viens de récupérer le ticket. Réflexe naturel : tu ouvres la page et tu demandes à Claude de te la
+spécifier.
+
+1. Ouvre l'appli : <http://localhost:8080>, connecte-toi avec `admin` / `admin123`.
+2. Va dans le menu Écritures → Toutes les écritures.
+3. Dans Claude Code, demande : « Explique-moi ce que fait la page /modules/entries/list.php. »
+4. Puis demande : « Écris-moi la spec fonctionnelle de cette page. »
+5. Colle sa réponse dans un fichier `spec-v1.md` et garde-le ouvert.
+
+Ne dépasse pas 12 minutes : à ce stade on ne cherche pas la perfection.
+
+<details><summary>💡 Tips</summary>
+
+- Reste sur le fonctionnel : ce que voit et fait l'utilisateur, pas le code.
+- Ne complète pas toi-même ce que Claude oublie : on le verra à l'étape suivante.
+</details>
+
+---
+
+## Étape 2 - Reprends la spec avec l'outil de l'usine (~18 min)
+
+Cette fois tu pars de l'analyse technique déjà préparée par le tech lead, et tu utilises l'outil qui
+t'interroge point par point.
+
+### 2.1 Récupère le dossier de la séance
+
+Le dojo est un dépôt à part (il s'appuie sur le keiko, mais c'est un autre item). Clone-le et entre dedans :
+
+```bash
+git clone --recurse-submodules https://github.com/Matigon-theodo/dojo-ai-pm-s2.git
+cd dojo-ai-pm-s2
+```
+
+Garde ta `spec-v1.md` de l'étape 1 sous la main pour la comparer en fin de séance (tu peux la copier ici,
+en adaptant le chemin) :
+
+```bash
+cp <chemin>/spec-v1.md .
+```
+
+Vérifie que tu as bien le dossier pré-mâché (tu dois voir `analysis.md` et le dossier `browser/`) :
+
+```bash
+ls docs/features/entries-list/
+```
+
+### 2.2 Lance le grill-me
+
+1. Dans Claude Code, lance : `/spec-grill-session entries-list`
+2. Réponds aux questions une par une. À chaque question, Claude te propose une réponse : valide-la,
+   ajuste-la, ou tranche autrement.
+3. Quand c'est fini, ouvre `docs/features/entries-list/spec.md` et relis-le.
+
+<details><summary>💡 Tips</summary>
+
+- Tu es le commanditaire (Product Owner) : réponds en métier, pas en technique.
+- Si Claude te propose une règle « selon le rôle de l'utilisateur » (par ex. cacher un bouton à certains
+  profils), vérifie dans `analysis.md` : l'appli ne gère aucun rôle aujourd'hui. Soit tu gardes le
+  comportement actuel (ouvert à tous), soit tu notes « ajouter des rôles » comme une décision à part,
+  séparée de la migration. Ne l'écris pas comme si ça existait déjà.
+- Pour savoir d'où Claude tient une réponse, demande-lui « sur quoi tu te bases ? ».
+</details>
+
+---
+
+## Étape 3 - Fais vérifier ta spec (~12 min)
+
+Avant de donner ta spec à un dev, tu la fais relire par un agent qui, lui, va lire le vrai code et
+chercher tes oublis.
+
+1. À la fin de l'étape 2, le skill lance une vérification indépendante : un relecteur qui relit le vrai
+   code legacy et cherche tes oublis. Laisse-le tourner.
+2. Lis son rapport : touchpoints oubliés, cas non couverts, points d'entrée manquants. Chaque remarque
+   pointe un fichier précis.
+3. Corrige ta `spec.md` avec Claude. Une boucle de correction suffit.
+
+<details><summary>💡 Tips</summary>
+
+- L'agent est là pour trouver des trous : un rapport sévère, c'est utile, pas un échec personnel.
+- Compare avec ta `spec-v1.md` : combien de ces trous y étaient déjà ?
+</details>
+
+---
+
+## Pour finir
+
+En une phrase : qu'est-ce que l'analyse fournie, l'outil et l'agent de vérification t'ont fait trancher
+ou corriger, que tu n'aurais pas vu en écrivant la spec seul ?
+
+---
+
+> ## ✅ Tu as réussi si…
+> - tu as une `spec.md` durcie, avec une section « Précisions issues du grill-me » où tu as tranché des
+>   décisions toi-même (dont au moins une décision « hors legacy » mise à part) ;
+> - tu as lancé `spec-verifier` et traité son rapport ;
+> - tu peux citer au moins 3 trous comblés depuis ta v1.
