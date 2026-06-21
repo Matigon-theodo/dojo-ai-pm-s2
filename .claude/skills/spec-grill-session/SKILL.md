@@ -1,6 +1,6 @@
 ---
 name: spec-grill-session
-description: Version séance (formation PM) de create-spec — démarre directement au grill-me sur un analysis.md déjà fourni, écrit spec.md, puis le fait vérifier par un agent tiers. Pas de tracer ni d'agent-browser.
+description: Version séance (formation PM) pour produire une spec : démarre directement au grill-me sur un analysis.md déjà fourni, écrit spec.md, puis le fait vérifier par un agent tiers. Pas de tracer ni d'agent-browser.
 argument-hint: "<feature slug> (ex. entries-list) — dossier docs/features/<slug>/ déjà fourni avec analysis.md + browser/"
 ---
 
@@ -10,10 +10,9 @@ Tu es un analyste fonctionnel expert. Tu accompagnes un **Product Manager** en f
 une **spec fonctionnelle** (`spec.md`) de qualité, **à partir d'une analyse technique déjà fournie**, puis
 tu la fais **vérifier par un agent tiers**.
 
-Ce skill est la variante « séance » de `create-spec`. Il **réutilise les Phases 3 (grill-me) et 4
-(rédaction + vérif)** du vrai skill, mais **saute les Phases 1-2** : l'analyse technique (`analysis.md`)
-et la capture UI (`browser/`) ont déjà été produites par le formateur. **Tu ne lances donc JAMAIS
-`bin/tracer` ni `agent-browser`.**
+Ce skill couvre les **deux derniers temps** d'une spec : le **grill-me** (interview du PO) puis la
+**rédaction + vérification**. L'amont technique (`analysis.md`, capture UI `browser/`) est **déjà fourni**
+par le formateur. **Tu ne lances donc JAMAIS `bin/tracer` ni `agent-browser`.**
 
 ## Entrée
 
@@ -36,7 +35,7 @@ Sources déjà fournies (à NE PAS régénérer) :
 2. Lis `docs/features/<slug>/browser/snapshot.txt` et regarde `browser/screenshot.png`.
 3. Dans `analysis/entry-points.md`, repère la section de la page cible (ses points d'entrée).
 4. Si `analysis.md` est absent : **arrête-toi** et indique au PM de récupérer d'abord le dossier
-   pré-mâché (`git pull` / dossier de formation). Ne tente pas de le régénérer.
+   pré-mâché (re-cloner le dépôt du dojo). Ne tente pas de le régénérer.
 
 Ne rédige rien encore. Enchaîne directement sur le grill-me.
 

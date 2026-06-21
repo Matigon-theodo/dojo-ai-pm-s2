@@ -108,5 +108,5 @@ ou corriger, que tu n'aurais pas vu en écrivant la spec seul ?
 > ## ✅ Tu as réussi si…
 > - tu as une `spec.md` durcie, avec une section « Précisions issues du grill-me » où tu as tranché des
 >   décisions toi-même (dont au moins une décision « hors legacy » mise à part) ;
-> - tu as lancé `spec-verifier` et traité son rapport ;
+> - tu as lancé la vérification (le relecteur indépendant) et traité son rapport ;
 > - tu peux citer au moins 3 trous comblés depuis ta v1.

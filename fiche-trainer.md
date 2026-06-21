@@ -28,7 +28,7 @@
 | 0-3 min    | Intro + reframe (« durcir puis vérifier ») + objectif du jour            |
 | 3-15 min   | **Étape 1** - spec v1 à la main (Claude seul)                            |
 | 15-33 min  | **Étape 2** - grill-me avec `spec-grill-session` (le cœur)               |
-| 33-44 min  | **Étape 3** - vérification par l'agent `spec-verifier`                    |
+| 33-44 min  | **Étape 3** - vérification par un agent tiers (relecteur)                |
 | 44-45 min  | Clôture + question de synthèse                                           |
 
 ## 🧵 Le fil rouge : l'objectif du trainee
