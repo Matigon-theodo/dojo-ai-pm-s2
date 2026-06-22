@@ -24,12 +24,14 @@ en la **durcissant** (grill-me) puis en la **faisant vérifier** par un agent in
 
 - Avoir fait la S0 du keiko : Ketchup Compta tourne en local (`http://localhost:8080`, `admin`/`admin123`),
   `claude` répond.
-- Cloner ce dépôt avec son submodule :
+- Cloner ce dépôt (privé) avec son submodule, via `gh` qui gère l'authentification :
 
 ```bash
-git clone --recurse-submodules https://github.com/Matigon-theodo/dojo-ai-pm-s2.git
+gh repo clone Matigon-theodo/dojo-ai-pm-s2 -- --recurse-submodules
 cd dojo-ai-pm-s2
 ```
+
+  (Si git réclame un mot de passe : `gh auth login` puis `gh auth setup-git`, et relance.)
 
 ## Démarrer
 

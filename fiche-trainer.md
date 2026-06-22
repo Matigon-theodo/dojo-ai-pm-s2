@@ -93,7 +93,9 @@ Fais-la pour toi, puis vérifie-la avec chaque binôme au démarrage.
 
 - [ ] L'app tourne : ouvrir <http://localhost:8080> → la page de connexion s'affiche (login `admin` /
       `admin123`). Sinon : relancer le Docker du keiko (`docker compose up -d` dans le dossier keiko).
-- [ ] Chaque PM a `claude` qui répond et `gh auth status` OK (acquis en S0).
+- [ ] Chaque PM a `claude` qui répond et `gh auth status` OK (acquis en S0). ⚠️ Fais-leur lancer
+      `gh auth setup-git` une fois : sinon `git clone` du repo privé réclamera un mot de passe et
+      échouera (panne n°1 de la séance). Avec `gh repo clone`, c'est géré automatiquement.
 - [ ] Chaque PM a accès en lecture au repo `dojo-ai-pm-s2` (sinon le clone échouera - voir Pannes).
 - [ ] Toi, tu as relu le corrigé du grill-me plus bas (le tableau des décisions attendues).
 
@@ -153,9 +155,10 @@ Ce que tu dis au groupe :
 > trancher - et surtout, ne jamais affirmer ce que le code ne fait pas. »
 
 Ce que le PM fait (exactement) :
-1. Récupère le dossier de la séance (clone du dépôt dojo) :
+1. Récupère le dossier de la séance. Le repo est privé → cloner via `gh` (il authentifie tout seul, pas
+   de mot de passe à taper) :
    ```bash
-   git clone --recurse-submodules https://github.com/Matigon-theodo/dojo-ai-pm-s2.git
+   gh repo clone Matigon-theodo/dojo-ai-pm-s2 -- --recurse-submodules
    cd dojo-ai-pm-s2
    ```
 2. Vérifie qu'il a bien le dossier fourni : `ls docs/features/entries-list/` (doit montrer `analysis.md`
@@ -240,7 +243,8 @@ remarques.
 | Symptôme | Cause probable | Déblocage |
 | --- | --- | --- |
 | `/spec-grill-session` n'apparaît pas dans Claude (taper `/`) | Claude n'est pas lancé dans le dossier `dojo-ai-pm-s2` | Quitter Claude, faire `cd dojo-ai-pm-s2`, relancer `claude`. Le skill vit dans `.claude/skills/` du dossier. |
-| `git clone` échoue (« repository not found » / accès refusé) | Le PM n'a pas encore l'accès lecture au repo privé | Le faire travailler en binôme sur la machine de celui qui a accès, le temps de régler l'accès. |
+| Le clone demande un mot de passe / « authentication failed » | git n'est pas branché sur le compte gh (le mot de passe GitHub ne marche plus pour git depuis 2021) | `gh auth login` puis `gh auth setup-git`, et relancer. Plus simple : `gh repo clone …`. Filet : le `.zip`. C'EST LA PANNE N°1, anticipe-la. |
+| `git clone` / `gh repo clone` échoue (« repository not found ») | Le PM n'a pas encore accepté l'invitation au repo privé | Faire accepter l'invitation (mail GitHub ou page `/invitations`). En attendant : binôme sur une machine qui a accès, ou le `.zip`. |
 | Le dossier `legacy/` est vide après le clone | Submodule non récupéré | `git submodule update --init` dans le dossier cloné. |
 | `localhost:8080` ne répond pas | L'app n'est pas démarrée | Relancer le Docker du keiko. À défaut, l'étape 1 peut se faire en demandant à Claude de lire le code de la page. |
 | L'outil écrit la spec sans poser de questions | Il a « foncé » | Lui dire : « *Pose-moi les questions une par une avant d'écrire la spec.* » |
@@ -276,8 +280,9 @@ remarques.
   aucun des deux.
 - Le piège des rôles est intentionnel. Ne le « corrige » pas à l'avance : il est documenté honnêtement
   dans l'`analysis.md` (aucun rôle), c'est au PM de le découvrir et de trancher.
-- Récupération du dojo : les PM clonent `dojo-ai-pm-s2` au début de l'étape 2, pas avant (l'étape 1 doit
-  rester mains nues).
+- Récupération du dojo : au début de l'étape 2 (pas avant - l'étape 1 reste mains nues). Repo privé →
+  `gh repo clone Matigon-theodo/dojo-ai-pm-s2 -- --recurse-submodules`. Si ça réclame un mot de passe,
+  c'est l'auth git/gh (`gh auth login` + `gh auth setup-git`). Filet ultime : le `.zip` distribué (aucun git).
 - Pour les curieux : le dossier `skills-a-explorer/` contient des copies de skills keiko (create-spec,
   grill-me, tracer, chaîne de production de code, agent de vérification) à parcourir. Ce ne sont pas les
   skills de la séance ; à proposer en bonus à ceux qui finissent en avance.

@@ -41,12 +41,21 @@ les questions maintenant, au moment de la spec, plutôt que de les subir plus ta
 
 ### 2.1 Récupère le dossier de la séance
 
-Le dojo est un dépôt à part (il s'appuie sur le keiko, mais c'est un autre item). Clone-le et entre dedans :
+Le dojo est un dépôt à part (il s'appuie sur le keiko, mais c'est un autre item). Il est privé : clone-le
+avec `gh` (qui t'authentifie automatiquement) :
 
 ```bash
-git clone --recurse-submodules https://github.com/Matigon-theodo/dojo-ai-pm-s2.git
+gh repo clone Matigon-theodo/dojo-ai-pm-s2 -- --recurse-submodules
 cd dojo-ai-pm-s2
 ```
+
+Si une demande de mot de passe apparaît (ou « authentication failed »), c'est que git n'utilise pas ton
+compte GitHub. Corrige-le une fois pour toutes, puis relance la commande de clone :
+```bash
+gh auth login        # si besoin : choisis GitHub.com, puis HTTPS, puis login via navigateur
+gh auth setup-git    # branche git sur ton compte gh
+```
+Dernier recours si rien ne marche : utilise le dossier `.zip` fourni par ton formateur (aucun git).
 
 Garde ta `spec-v1.md` de l'étape 1 sous la main pour la comparer en fin de séance (tu peux la copier ici,
 en adaptant le chemin) :
