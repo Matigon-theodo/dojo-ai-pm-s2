@@ -12,7 +12,7 @@ débloquez-vous à deux.
 
 ---
 
-## Étape 1 - Le réflexe (~12 min)
+## Étape 1 - Le réflexe (~10 min)
 
 Le ticket vient de tomber. Ton premier réflexe, comme tout le monde : ouvrir la page, regarder ce qu'elle
 fait, et demander à Claude de t'en écrire la spec. Vas-y, sans filet.
@@ -24,7 +24,7 @@ fait, et demander à Claude de t'en écrire la spec. Vas-y, sans filet.
 4. Une fois les idées claires, c'est la spec fonctionnelle de la page que tu veux. Demande-la, à ta façon.
 5. Colle sa réponse dans un fichier `spec-v1.md` et garde-le ouvert.
 
-Ne dépasse pas 12 minutes : à ce stade on ne cherche pas la perfection, on cherche ton point de départ.
+Ne dépasse pas 10 minutes : à ce stade on ne cherche pas la perfection, on cherche ton point de départ.
 
 <details><summary>💡 Tips</summary>
 
@@ -34,7 +34,7 @@ Ne dépasse pas 12 minutes : à ce stade on ne cherche pas la perfection, on che
 
 ---
 
-## Étape 2 - L'usine entre en jeu (~18 min)
+## Étape 2 - L'usine entre en jeu (~20 min)
 
 Rejouer la même chose à la main ne servirait à rien. Cette fois tu changes de méthode : tu pars de
 l'analyse technique que le tech lead a déjà préparée, et tu laisses l'outil de l'usine t'interroger point

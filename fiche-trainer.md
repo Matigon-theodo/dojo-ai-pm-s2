@@ -105,15 +105,14 @@ Fais-la pour toi, puis vérifie-la avec chaque binôme au démarrage.
 
 | Temps      | Séquence                                                                 |
 | ---------- | ------------------------------------------------------------------------ |
-| 0-3 min    | Intro + reframe (« monter en qualité puis vérifier ») + objectif du jour |
-| 3-15 min   | Étape 1 - spec v1 à la main (Claude seul)                                |
-| 15-33 min  | Étape 2 - grill-me avec `spec-grill-session` (le cœur)                   |
-| 33-44 min  | Étape 3 - vérification par un agent tiers (relecteur)                    |
-| 44-45 min  | Clôture + question de synthèse                                           |
+| 0-5 min    | Intro + reframe (« monter en qualité puis vérifier ») + objectif du jour |
+| 5-15 min   | Étape 1 - spec v1 à la main (Claude seul)                                |
+| 15-35 min  | Étape 2 - grill-me avec `spec-grill-session` (le cœur)                   |
+| 35-45 min  | Étape 3 - relecture (`/spec-review`) + clôture                           |
 
 ---
 
-## Étape 1 - La spec « à la main » (~12 min)
+## Étape 1 - La spec « à la main » (~10 min)
 
 Objectif : produire vite une spec naïve (`spec-v1.md`) pour, plus tard, mesurer tout ce qui lui manquait.
 Elle doit être imparfaite : c'est voulu.
@@ -136,14 +135,14 @@ choses : les permissions, la liste vide, les cas d'erreur, le périmètre préci
 
 Réussite de l'étape : un fichier `spec-v1.md` existe. Ne pas chercher la qualité ici.
 
-Si ça coince : voir le tableau Pannes. Tiens la barre à ~12 min - coupe court si besoin, l'important est
+Si ça coince : voir le tableau Pannes. Tiens la barre à ~10 min - coupe court si besoin, l'important est
 d'avoir un brouillon à comparer.
 
 > 💡 Résiste à l'envie d'aider les PM à « bien faire » leur v1. Plus elle est naïve, plus l'étape 2 frappe.
 
 ---
 
-## Étape 2 - Le grill-me (~18 min) · LE CŒUR DE LA SÉANCE
+## Étape 2 - Le grill-me (~20 min) · LE CŒUR DE LA SÉANCE
 
 Objectif : monter la spec en qualité en se faisant interroger, sur la base de l'analyse technique fournie.
 Le PM tranche chaque décision (et n'invente rien).
@@ -275,7 +274,7 @@ explicitement) les remarques.
 
 ## 🗒️ Notes animateur
 
-- Time-box strict. Annonce les durées, garde un chrono visible. L'étape 1 ne doit pas dépasser ~12 min. Le
+- Time-box strict. Annonce les durées, garde un chrono visible. L'étape 1 ne doit pas dépasser ~10 min. Le
   grill-me est le gros du budget ; l'étape 3 vise une boucle de correction.
 - L'arc : on monte en qualité (grill-me) puis on fiabilise (vérification). Deux moments « aha » : (2) le
   grill-me te fait trancher ce que tu ignorais ; (3) l'agent tiers attrape ce qu'il te reste. Ne sacrifie
