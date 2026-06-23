@@ -35,8 +35,9 @@ cd dojo-ai-pm-s2
 
 ## Démarrer
 
-Ouvre `fiche-trainee.md` et suis les 3 étapes. Le cœur tient en une commande :
+Ouvre `fiche-trainee.md` et suis les 3 étapes. Deux commandes structurent la séance :
 
 ```
-/spec-grill-session entries-list
+/spec-grill-session entries-list   # étape 2 : grill-me + rédaction de spec.md
+/spec-review entries-list          # étape 3 : relecture par un regard indépendant (à lancer toi-même)
 ```

@@ -47,8 +47,8 @@ Ouvre le `SKILL.md` de chacun. Ils suivent la **chaîne de modernisation**, de l
 - **spec-verifier.md** — l'agent de vérification « de production » du keiko (7 contrôles : couverture des
   touchpoints, qualité de l'analyse, cas d'usage, points d'entrée, couverture Gherkin 100 %, etc.). Il
   relit le code legacy **et** s'appuie sur le tracer/graphe. C'est pourquoi, dans le dojo (sans tracer
-  embarqué), la S2 utilise une version **allégée du même principe**, lancée automatiquement par
-  `spec-grill-session` à l'Étape 3 : un relecteur indépendant qui lit le code directement, sans tracer.
+  embarqué), la S2 utilise une version **allégée du même principe**, exposée via le skill `spec-review`
+  (étape 3) que le PM lance lui-même : un relecteur indépendant qui lit le code directement, sans tracer.
 
 ---
 

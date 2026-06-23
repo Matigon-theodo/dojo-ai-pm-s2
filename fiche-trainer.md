@@ -199,15 +199,17 @@ la décision sur les rôles, une table de touchpoints, et des scénarios.
 
 ## Étape 3 - Faire vérifier par un agent tiers (~10 min)
 
-Objectif : découvrir la valeur d'un regard indépendant. Un agent relit le vrai code et pointe ce que le PM
-(et le grill-me) ont laissé passer.
+Objectif : découvrir la valeur d'un regard indépendant, en le déclenchant soi-même. Le PM lance un agent
+qui relit le vrai code et pointe ce que lui (et le grill-me) ont laissé passer.
 
 Ce que tu dis au groupe :
-> « Vous pensez avoir une bonne spec ? On la passe à un agent dont le seul job est de relire le vrai code
-> et de trouver vos trous. C'est exactement ce qu'on veut faire avant de donner la spec aux devs. »
+> « Vous pensez avoir une bonne spec ? Maintenant vous la confiez vous-même à un relecteur indépendant -
+> un agent qui n'a pas participé à votre rédaction - dont le seul job est de relire le vrai code et de
+> trouver vos trous. C'est exactement ce qu'on veut faire avant de donner la spec aux devs. »
 
-Ce que le PM fait : à la fin de l'étape 2, l'outil propose de lancer la vérification. Le PM la laisse
-tourner, lit le rapport, puis corrige `spec.md` avec Claude. Une seule boucle de correction suffit.
+Ce que le PM fait : il lance lui-même la relecture avec `/spec-review entries-list` (c'est un geste à
+part, distinct de la création). Il laisse le relecteur tourner, lit le rapport, puis corrige `spec.md`
+avec Claude. Une seule boucle de correction suffit.
 
 Ce que le PM doit voir : un rapport qui rend un verdict (OK / À corriger) et, pour chaque écart, cite le
 fichier de code concerné. Exemples d'écarts typiques et fréquents :
@@ -221,8 +223,8 @@ Comment guider la correction : demande au PM de reprendre chaque remarque et de 
 point dans spec.md ». Pas besoin d'un verdict parfait : l'important est le geste (faire vérifier,
 comprendre, corriger).
 
-Réussite de l'étape : le PM a lancé la vérification, lu le rapport, et traité (ou noté explicitement) les
-remarques.
+Réussite de l'étape : le PM a lancé lui-même `/spec-review`, lu le rapport, et traité (ou noté
+explicitement) les remarques.
 
 > 💡 Dédramatise un rapport sévère : l'agent est *fait* pour trouver des trous. Un rapport rouge = de la
 > valeur trouvée, pas un échec. Insiste : il relit le code réel, pas la spec - c'est ça qui rend son regard
@@ -233,7 +235,7 @@ remarques.
 > ## ✅ Livrable et réussite - C'est bon si…
 > - le PM a une `spec.md` de qualité avec une section « Précisions issues du grill-me » contenant au moins
 >   une décision « hors legacy » proprement isolée (typiquement les rôles) ;
-> - le PM a lancé la vérification (le relecteur indépendant) et traité (ou explicitement noté) ses remarques ;
+> - le PM a lancé lui-même la relecture (`/spec-review`) et traité (ou explicitement noté) ses remarques ;
 > - le PM sait citer au moins 3 trous comblés par rapport à sa `spec-v1.md`.
 
 ---

@@ -91,11 +91,11 @@ ls docs/features/entries-list/
 
 ## Étape 3 - Fais vérifier ta spec (~10 min)
 
-Avant de donner ta spec à un dev, tu la fais relire par un agent qui, lui, va lire le vrai code et
-chercher tes oublis.
+Ta spec te paraît bonne ? C'est le moment de la confier à un regard neuf. Tu lances toi-même un relecteur
+indépendant : un agent qui n'a pas participé à ta rédaction, qui relit le vrai code et cherche tes oublis -
+exactement ce qu'on veut faire avant de donner la spec à un dev.
 
-1. À la fin de l'étape 2, le skill lance une vérification indépendante : un relecteur qui relit le vrai
-   code legacy et cherche tes oublis. Laisse-le tourner.
+1. Lance la relecture : `/spec-review entries-list`
 2. Lis son rapport : touchpoints oubliés, cas non couverts, points d'entrée manquants. Chaque remarque
    pointe un fichier précis.
 3. Corrige ta `spec.md` avec Claude. Une boucle de correction suffit.

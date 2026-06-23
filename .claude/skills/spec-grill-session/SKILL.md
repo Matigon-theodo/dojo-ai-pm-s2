@@ -1,18 +1,18 @@
 ---
 name: spec-grill-session
-description: Version séance (formation PM) pour produire une spec : démarre directement au grill-me sur un analysis.md déjà fourni, écrit spec.md, puis le fait vérifier par un agent tiers. Pas de tracer ni d'agent-browser.
+description: Version séance (formation PM) pour produire une spec : démarre directement au grill-me sur un analysis.md déjà fourni et écrit spec.md. Pas de tracer ni d'agent-browser. (La relecture indépendante est un skill séparé : spec-review.)
 argument-hint: "<feature slug> (ex. entries-list) — dossier docs/features/<slug>/ déjà fourni avec analysis.md + browser/"
 ---
 
 ## Rôle
 
 Tu es un analyste fonctionnel expert. Tu accompagnes un **Product Manager** en formation pour produire
-une **spec fonctionnelle** (`spec.md`) de qualité, **à partir d'une analyse technique déjà fournie**, puis
-tu la fais **vérifier par un agent tiers**.
+une **spec fonctionnelle** (`spec.md`) de qualité, **à partir d'une analyse technique déjà fournie**.
 
-Ce skill couvre les **deux derniers temps** d'une spec : le **grill-me** (interview du PO) puis la
-**rédaction + vérification**. L'amont technique (`analysis.md`, capture UI `browser/`) est **déjà fourni**
-par le formateur. **Tu ne lances donc JAMAIS `bin/tracer` ni `agent-browser`.**
+Ce skill couvre **le grill-me (interview du PO) puis la rédaction de `spec.md`**. L'amont technique
+(`analysis.md`, capture UI `browser/`) est **déjà fourni** par le formateur. **Tu ne lances donc JAMAIS
+`bin/tracer` ni `agent-browser`.** La **relecture par un regard indépendant** est une étape SÉPARÉE, que
+le PM déclenche ensuite lui-même avec le skill `spec-review` — ne la lance pas ici.
 
 ## Entrée
 
@@ -69,8 +69,8 @@ permissions. Garde trace de **chaque décision résolue** — toutes doivent att
 
 Une spec de **migration** décrit d'abord ce que le système fait **aujourd'hui**. Quand le PM décide
 d'ajouter quelque chose qui **n'existe pas dans le legacy**, ne le présente JAMAIS comme un comportement
-existant : range-le dans une rubrique dédiée **« Décisions produit (hors legacy) »**. Sinon l'agent de
-vérification (Étape 3) le recalera — à juste titre.
+existant : range-le dans une rubrique dédiée **« Décisions produit (hors legacy) »**. Sinon le relecteur
+indépendant (étape suivante, `/spec-review`) le recalera — à juste titre.
 
 ## Étape 2 : Rédiger la spec
 
@@ -84,24 +84,16 @@ validation** Gherkin **couverture 100 %** (nominal + chaque cas d'erreur de l'an
 > chemins listés dans `analysis/entry-points.md` (menu, redirections, boutons). Ne mets PAS de scénarios
 > Gherkin pour des décisions « hors legacy » présentées comme du legacy.
 
-## Étape 3 : Faire vérifier par un regard indépendant
+## Clôture
 
-Lance un **sous-agent de vérification** (outil Agent) pour relire le travail avec des yeux neufs. Donne-lui
-cette consigne :
+Une fois `spec.md` écrit, **arrête-toi là**. Annonce au PM que sa spec est prête et indique l'étape
+suivante, qui est **séparée et à sa main** :
 
-> Relis le code legacy (dossier `legacy/`) et `docs/features/<slug>/analysis.md`, puis confronte-les à
-> `docs/features/<slug>/spec.md`. **N'utilise PAS `bin/tracer`** (indisponible ici) : lis le code source
-> directement. Signale tout écart :
-> - un touchpoint atteignable depuis la page absent de la table (ou mal classé in/out scope) ;
-> - un cas d'erreur de `analysis.md` sans scénario Gherkin ;
-> - un point d'entrée de `analysis/entry-points.md` non repris dans la spec ;
-> - une décision présentée comme du legacy alors qu'elle n'existe pas dans le code (elle doit figurer en
->   « Décisions produit (hors legacy) ») ;
-> - toute affirmation non vérifiable dans le code legacy.
-> Rends un verdict (OK / À corriger) avec, pour chaque écart, le fichier legacy concerné.
+> Ta spec est prête : `docs/features/<slug>/spec.md`. Étape suivante : fais-la relire par un **regard
+> indépendant** en lançant **`/spec-review <slug>`**. C'est un geste à part entière — on confie son travail
+> à un tiers avant de le passer aux devs.
 
-**Lis son rapport avec le PM, puis corrige `spec.md`.** C'est un geste à part entière : faire valider son
-travail par un tiers adversarial **avant** de le passer aux devs.
+**Ne lance pas la relecture toi-même** : c'est au PM de déclencher `spec-review`.
 
 ## Règles
 
