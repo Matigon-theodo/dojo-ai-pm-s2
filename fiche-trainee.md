@@ -29,7 +29,17 @@ Ne dépasse pas 10 minutes : à ce stade on ne cherche pas la perfection, on che
 
 <details><summary>💡 Tips</summary>
 
-- Reste sur le fonctionnel : ce que voit et fait l'utilisateur, pas le code.
+- **Fais lire le vrai fichier à Claude.** Donne-lui le chemin (`@legacy/www/modules/entries/list.php`)
+  plutôt que de lui décrire la page de mémoire : une réponse appuyée sur le code vaut mieux qu'une réponse
+  « au feeling », et ça l'empêche d'inventer.
+- **Avance en deux temps.** D'abord « explique-moi ce que fait cette page » → tu lis, tu vérifies que ça
+  colle à ce que tu vois à l'écran ; *ensuite* seulement tu demandes la spec. Un seul méga-prompt donne
+  une réponse plus floue.
+- **Dis-lui l'attendu : pour qui, pour quoi.** Précise le lecteur et le but (« une spec qu'un dev peut
+  prendre en dev directement, sans revenir me voir ») — Claude vise mieux quand la cible est claire.
+  Inutile de lui dicter un plan détaillé : tu ne sais pas encore ce qu'une bonne spec doit contenir, et
+  c'est justement ce que la suite va t'apprendre.
+- **Reste sur le fonctionnel** : ce que voit et fait l'utilisateur, pas le code.
 </details>
 
 Garde ta `spec-v1.md` sous la main : tu la compareras à la version « outillée » à la fin de l'étape 2.
