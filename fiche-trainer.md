@@ -144,6 +144,10 @@ Si ça coince : voir le tableau Pannes. Tiens la barre à ~10 min - coupe court 
 d'avoir un brouillon à comparer.
 
 > 💡 Résiste à l'envie d'aider les PM à « bien faire » leur v1. Plus elle est naïve, plus l'étape 2 frappe.
+> Les tips de la fiche trainee pour cette étape portent sur la *façon de piloter Claude* (lui faire lire le
+> vrai fichier avec `@`, procéder en deux temps, lui dire pour qui / pourquoi) — **pas** sur la complétude
+> de la spec. Ils n'aident pas à « tricher » la baseline : ils installent juste de bons réflexes outil.
+> Laisse-les faire ça, et continue de couper court dès qu'un PM veut peaufiner le contenu.
 
 ---
 
