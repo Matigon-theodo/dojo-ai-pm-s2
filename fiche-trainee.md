@@ -13,14 +13,17 @@
 
 ## Étape 1 - Spec écrite avec Claude seulement (~10 min)
 
+> 📁 **Où tu travailles :** dans **ton projet `keiko-ai-mod`**, celui des séances 0 et 1. Lance Claude
+> Code dedans, exactement comme en S1. Rien de nouveau à télécharger pour cette étape.
+
 1. Ouvre l'appli : <http://localhost:8080>, connecte-toi avec `admin` / `admin123`.
 2. Va dans le menu Écritures → Toutes les écritures.
-3. La page vit dans le fichier `/modules/entries/list.php`.
+3. Le code de la page vit dans `legacy/www/modules/entries/list.php`.
 
-Dans cette première version, écris directement la spec avec Claude en te basant sur la codebase,
+Dans cette première version, écris directement la spec avec Claude en te basant sur le code,
 l'interface de l'app et ta compréhension. Vas-y, sans filet.
 
-→ Colle ta réponse dans un fichier `spec-v1.md` et garde-le ouvert.
+→ Colle ta réponse dans un fichier `spec-v1.md` (à la racine de `keiko-ai-mod`) et garde-le ouvert.
 
 Ne dépasse pas 10 minutes : à ce stade on ne cherche pas la perfection, on cherche ton point de départ.
 
@@ -29,7 +32,7 @@ Ne dépasse pas 10 minutes : à ce stade on ne cherche pas la perfection, on che
 - Reste sur le fonctionnel : ce que voit et fait l'utilisateur, pas le code.
 </details>
 
-Garde ta `spec-v1.md` de l'étape 1 sous la main pour la comparer en fin de séance.
+Garde ta `spec-v1.md` sous la main : tu la compareras à la version « outillée » à la fin de l'étape 2.
 
 ---
 
@@ -38,27 +41,40 @@ Garde ta `spec-v1.md` de l'étape 1 sous la main pour la comparer en fin de séa
 Maintenant on va se servir non seulement de Claude mais aussi d'un SKILL issu d'une usine agentique
 éprouvée pour réaliser la spec.
 
+> 📁 **Deux dossiers, ne les confonds pas.** À partir d'ici, tu changes d'endroit où tu travailles :
+> - **`keiko-ai-mod`** = *ton projet* (séances 0 et 1). C'est là que tourne l'app et que tu viens
+>   d'écrire ta `spec-v1.md`. Tu t'en es servi à l'étape 1.
+> - **`dojo-ai-pm-s2`** = *le kit de la séance*, que tu télécharges maintenant. Il contient l'analyse
+>   technique déjà faite par ton tech lead (`analysis.md`) et l'outil qui va t'aider à écrire la spec.
+>   **C'est ici que tu travailles à partir de l'étape 2.**
+>
+> Pourquoi un dossier à part plutôt que ton projet ? Pour que tout le monde démarre du **même
+> environnement contrôlé** : la même analyse, le même outil, la même version du code. Ton projet
+> `keiko-ai-mod` reste intact de son côté.
+
 Cette fois, le tech lead a déjà fait une analyse technique préalable qu'il a résumée dans le fichier
 `analysis.md`.
 
-### 2.1 D'abord récupère le dossier de la séance
+### 2.1 Télécharge le kit de la séance
 
-Afin d'utiliser l'usine IA standard Theodo, on travaille dans un dépôt dédié qu'on va appeler
-« dojo-ai-pm-s2 ».
-
-Pour cela, clone le repo source et entre dedans via les commandes ci-dessous. S'il te demande un
-identifiant ou un mot de passe, ne le remplis pas : c'est que le dépôt est privé, déplie le premier toggle
-en dessous des commandes à copier.
+Le kit vit dans un dépôt dédié, `dojo-ai-pm-s2`. Clone-le **à côté de ton projet** (par exemple dans le
+même dossier parent que `keiko-ai-mod`) et entre dedans :
 
 ```bash
 git clone --recurse-submodules https://github.com/Matigon-theodo/dojo-ai-pm-s2.git
 cd dojo-ai-pm-s2
 ```
 
+Le dépôt est public : le clone doit passer sans rien te demander. Si jamais Git réclame quand même un
+identifiant ou un mot de passe (selon la config de ta machine), ne le remplis pas et déplie le premier
+toggle ci-dessous.
+
 <details><summary>🔑 Git me demande un identifiant ou un mot de passe ?</summary>
 
-Le dépôt est privé : Git a besoin que tu sois authentifié. GitHub n'accepte plus le mot de passe de
-compte, donc on passe par le GitHub CLI (`gh`), qui gère ça sans manipuler de mot de passe.
+Le dépôt est public, donc en principe ça ne devrait pas arriver. Si ça arrive quand même, c'est que ta
+machine est configurée pour passer par une authentification (par ex. réécriture des URLs en SSH). GitHub
+n'accepte plus le mot de passe de compte, donc on passe par le GitHub CLI (`gh`), qui gère ça sans
+manipuler de mot de passe.
 
 **1. Installe `gh`, sans Homebrew**
 
@@ -103,6 +119,15 @@ Sur Mac Intel, recopie plutôt la ligne exacte affichée par l'installeur à la 
 </details>
 
 Ça y est ! Tu viens de faire une copie d'une version allégée de l'usine de modernisation IA de Theodo.
+Deux réflexes maintenant que tu as changé de dossier :
+
+1. **Lance Claude Code depuis `dojo-ai-pm-s2`** (et non plus depuis `keiko-ai-mod`). C'est le seul dossier
+   où tu travailles jusqu'à la fin de la séance.
+2. **Récupère ta `spec-v1.md`** ici, pour pouvoir la comparer à la version outillée en 2.5 :
+
+   ```bash
+   cp ../keiko-ai-mod/spec-v1.md .   # adapte le chemin si tu l'as rangée ailleurs
+   ```
 
 ### 2.2 Explorer l'usine que tu viens de cloner !
 
