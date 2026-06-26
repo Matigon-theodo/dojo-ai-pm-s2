@@ -1,8 +1,8 @@
 # Skills à explorer (pour les curieux)
 
 Ces skills sont des **copies de référence** issues du keiko (le tuto de modernisation). Ils sont là pour
-que tu **voies comment c'est fait** — pas pour les lancer pendant la séance. La S2 n'utilise qu'un seul
-skill : `/spec-grill-session` (à la racine, dans `.claude/skills/`).
+que tu **voies comment c'est fait** — pas pour les lancer pendant la séance. Les skills réellement
+**actifs** de la S2 vivent dans `.claude/skills/` : `/spec-grill-session`, `/spec-review` et `/grill-me`.
 
 > ⚠️ Ce sont des copies pour **lecture**. Certains référencent de l'outillage keiko (tracer, agents…) qui
 > n'est pas embarqué ici : ne t'attends pas à ce qu'ils tournent tels quels dans ce dépôt.
@@ -16,8 +16,10 @@ Ouvre le `SKILL.md` de chacun. Ils suivent la **chaîne de modernisation**, de l
   - `page-discovery.md` — **c'est là qu'est documenté `agent-browser`** (l'outil qui ouvre l'app, se
     connecte et capture les écrans/snapshots).
   - `template-spec.md` / `template-analysis.md` — les gabarits des deux livrables.
-- **grill-me/** — le skill générique « cuisine-moi » : interviewer une décision/un plan question par
-  question. C'est le moteur du grill-me que tu as vécu en séance.
+
+> Le skill `grill-me` (« cuisine-moi » : interviewer une décision/un plan question par question, le moteur
+> du grill que tu vis en séance) **n'est plus ici** : c'est un skill actif, il a été déplacé dans
+> `.claude/skills/grill-me/`. Tu peux donc le lancer directement avec `/grill-me`.
 
 ## 2. Analyser le legacy / tracer le code
 
