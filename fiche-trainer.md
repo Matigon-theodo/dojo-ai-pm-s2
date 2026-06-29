@@ -14,7 +14,7 @@
 - Public : Product Managers (non techniques).
 - Format : binôme, chacun sa machine. ~45 min, mains au clavier ~30 min.
 - Durée : 45 min, time-box strict.
-- Page support : « Toutes les Écritures » de l'app Ketchup Compta (`/modules/entries/list.php`).
+- Page support : « Toutes les Écritures » de l'app Ketchup Compta (`legacy/www/modules/entries/list.php`).
 - Livrables du PM : `spec-v1.md` (brouillon), puis `spec.md` (de qualité et vérifiée).
 
 ---
@@ -92,11 +92,12 @@ puis décider en connaissance de cause. »
 Fais-la pour toi, puis vérifie-la avec chaque binôme au démarrage.
 
 - [ ] L'app tourne : ouvrir <http://localhost:8080> → la page de connexion s'affiche (login `admin` /
-      `admin123`). Sinon : relancer le Docker du keiko (`docker compose up -d` dans le dossier keiko).
-- [ ] Chaque PM a `claude` qui répond et `gh auth status` OK (acquis en S0). ⚠️ Fais-leur lancer
-      `gh auth setup-git` une fois : sinon `git clone` du repo privé réclamera un mot de passe et
-      échouera (panne n°1 de la séance). Avec `gh repo clone`, c'est géré automatiquement.
-- [ ] Chaque PM a accès en lecture au repo `dojo-ai-pm-s2` (sinon le clone échouera - voir Pannes).
+      `admin123`). Sinon : relancer le Docker (`docker compose up -d` dans `keiko-ai-mod/legacy`).
+- [ ] Chaque PM a `claude` qui répond (acquis en S0) et son projet `keiko-ai-mod` (séances 0/1) sous la
+      main : c'est là que se fait l'étape 1.
+- [ ] Le repo du kit `dojo-ai-pm-s2` est **public** : le `git clone` de l'étape 2 passe sans
+      authentification. (Si la machine d'un PM réécrit les URLs en SSH, le clone peut quand même réclamer
+      une clé - voir Pannes.)
 - [ ] Toi, tu as relu le corrigé du grill-me plus bas (le tableau des décisions attendues).
 
 ---
@@ -106,9 +107,9 @@ Fais-la pour toi, puis vérifie-la avec chaque binôme au démarrage.
 | Temps      | Séquence                                                                 |
 | ---------- | ------------------------------------------------------------------------ |
 | 0-5 min    | Intro + reframe (« monter en qualité puis vérifier ») + objectif du jour |
-| 5-15 min   | Étape 1 - spec v1 à la main (Claude seul)                                |
-| 15-35 min  | Étape 2 - grill-me avec `spec-grill-session` (le cœur)                   |
-| 35-45 min  | Étape 3 - relecture (`/spec-review`) + clôture                           |
+| 5-15 min   | Étape 1 - spec v1 à la main, dans `keiko-ai-mod` (Claude seul)            |
+| 15-30 min  | Étape 2 - clone du kit `dojo-ai-pm-s2` + grill-me (le cœur)               |
+| 30-45 min  | Étape 3 - relecture (`/spec-review`) + clôture                           |
 
 ---
 
@@ -122,13 +123,17 @@ Ce que tu dis au groupe :
 > la page, on demande à Claude de l'écrire. En 10 minutes vous aurez quelque chose qui *paraît* bien.
 > Gardez-le précieusement : on va le malmener juste après. »
 
+📁 **Où il travaille :** dans **son projet `keiko-ai-mod`** (celui des séances 0/1), pas dans le kit de la
+séance (qu'il ne clonera qu'à l'étape 2). C'est voulu : `keiko-ai-mod` ne contient pas le skill, donc
+aucun risque que `spec-grill-session` se déclenche tout seul et « triche » la baseline naïve.
+
 Ce que le PM fait (exactement) :
 1. Ouvre <http://localhost:8080>, se connecte (`admin` / `admin123`), va dans Écritures → Toutes les
    écritures.
-2. Dans Claude Code (sans aucune commande spéciale) : « *Explique-moi ce que fait la page
-   /modules/entries/list.php.* »
+2. Lance Claude Code dans `keiko-ai-mod` (comme en S1), puis : « *Explique-moi ce que fait la page
+   `legacy/www/modules/entries/list.php`.* »
 3. Puis : « *Écris-moi la spec fonctionnelle de cette page.* »
-4. Colle la réponse dans un fichier `spec-v1.md` et le garde ouvert.
+4. Colle la réponse dans un fichier `spec-v1.md` (à la racine de `keiko-ai-mod`) et le garde ouvert.
 
 Ce que le PM doit voir : une spec courte (objectif + quelques cas d'usage). Normal qu'elle oublie des
 choses : les permissions, la liste vide, les cas d'erreur, le périmètre précis, la pagination.
@@ -139,10 +144,14 @@ Si ça coince : voir le tableau Pannes. Tiens la barre à ~10 min - coupe court 
 d'avoir un brouillon à comparer.
 
 > 💡 Résiste à l'envie d'aider les PM à « bien faire » leur v1. Plus elle est naïve, plus l'étape 2 frappe.
+> Les tips de la fiche trainee pour cette étape portent sur la *façon de piloter Claude* (lui faire lire le
+> vrai fichier avec `@`, procéder en deux temps, lui dire pour qui / pourquoi) — **pas** sur la complétude
+> de la spec. Ils n'aident pas à « tricher » la baseline : ils installent juste de bons réflexes outil.
+> Laisse-les faire ça, et continue de couper court dès qu'un PM veut peaufiner le contenu.
 
 ---
 
-## Étape 2 - Le grill-me (~20 min) · LE CŒUR DE LA SÉANCE
+## Étape 2 - Le grill-me (~15 min) · LE CŒUR DE LA SÉANCE
 
 Objectif : monter la spec en qualité en se faisant interroger, sur la base de l'analyse technique fournie.
 Le PM tranche chaque décision (et n'invente rien).
@@ -153,19 +162,27 @@ Ce que tu dis au groupe :
 > de Matt Pocock : on fait remonter toutes les questions maintenant, pas pendant le dev. Votre boulot :
 > trancher - et surtout, ne jamais affirmer ce que le code ne fait pas. »
 
+📁 **Changement de dossier ici.** Le PM quitte son projet `keiko-ai-mod` pour **le kit de la séance**
+`dojo-ai-pm-s2` (un dépôt à part, public, avec l'analyse du tech lead + le skill). Insiste sur le « deux
+dossiers » : *ton projet* vs *le kit du jour*. À partir d'ici, tout se passe dans le kit.
+
 Ce que le PM fait (exactement) :
-1. Récupère le dossier de la séance. Le repo est privé → cloner via `gh` (il authentifie tout seul, pas
-   de mot de passe à taper) :
+1. Clone le kit **à côté** de `keiko-ai-mod`, et entre dedans. Le repo est public → pas d'authentification :
    ```bash
-   gh repo clone Matigon-theodo/dojo-ai-pm-s2 -- --recurse-submodules
+   git clone --recurse-submodules https://github.com/Matigon-theodo/dojo-ai-pm-s2.git
    cd dojo-ai-pm-s2
    ```
-2. Vérifie qu'il a bien le dossier fourni : `ls docs/features/entries-list/` (doit montrer `analysis.md`
+2. Bascule Claude Code sur ce dossier, et récupère sa v1 pour la comparaison de fin d'étape :
+   ```bash
+   cp ../keiko-ai-mod/spec-v1.md .   # adapter le chemin si rangée ailleurs
+   ```
+3. Vérifie qu'il a bien le dossier fourni : `ls docs/features/entries-list/` (doit montrer `analysis.md`
    et `browser/`).
-3. Lance Claude Code dans ce dossier, puis tape : `/spec-grill-session entries-list`
-4. Répond aux questions une par une. À chaque fois l'outil propose une réponse : valider, ajuster, ou
-   trancher autrement.
+4. Tape : `/spec-grill-session entries-list`, puis répond aux questions une par une. À chaque fois l'outil
+   propose une réponse : valider, ajuster, ou trancher autrement.
 5. À la fin, l'outil écrit `docs/features/entries-list/spec.md`. Le PM le relit.
+6. Compare v1 ↔ spec.md (étape 2.5 de la fiche trainee) : fait sortir par Claude le tableau des trous
+   comblés - c'est le moment « aha » sur la valeur du skill.
 
 Ce que le PM doit voir : l'outil pose des questions une à une (pas un mur de texte), puis produit un
 `spec.md` structuré : Pourquoi (+ schéma), Démo (capture), Cas d'utilisation, Précisions issues du
@@ -243,11 +260,11 @@ explicitement) les remarques.
 
 | Symptôme | Cause probable | Déblocage |
 | --- | --- | --- |
-| `/spec-grill-session` n'apparaît pas dans Claude (taper `/`) | Claude n'est pas lancé dans le dossier `dojo-ai-pm-s2` | Quitter Claude, faire `cd dojo-ai-pm-s2`, relancer `claude`. Le skill vit dans `.claude/skills/` du dossier. |
-| Le clone demande un mot de passe / « authentication failed » | git n'est pas branché sur le compte gh (le mot de passe GitHub ne marche plus pour git depuis 2021) | `gh auth login` puis `gh auth setup-git`, et relancer. Plus simple : `gh repo clone …`. Filet : le `.zip`. C'EST LA PANNE N°1, anticipe-la. |
-| `git clone` / `gh repo clone` échoue (« repository not found ») | Le PM n'a pas encore accepté l'invitation au repo privé | Faire accepter l'invitation (mail GitHub ou page `/invitations`). En attendant : binôme sur une machine qui a accès, ou le `.zip`. |
+| `/spec-grill-session` n'apparaît pas dans Claude (taper `/`) | Claude est resté lancé dans `keiko-ai-mod` (le skill n'y est pas) | Quitter Claude, faire `cd dojo-ai-pm-s2`, relancer `claude`. Le skill vit dans `.claude/skills/` du kit. C'EST LA PANNE N°1, anticipe-la. |
+| Le clone demande un mot de passe / « authentication failed » alors que le repo est public | La machine du PM réécrit les URLs HTTPS en SSH (config d'entreprise) et n'a pas de clé | `gh auth login` puis `gh auth setup-git`, et relancer. Filet : le `.zip`. Rare maintenant que le repo est public. |
+| Le PM ne sait plus dans quel dossier il est | Confusion `keiko-ai-mod` (étape 1) vs `dojo-ai-pm-s2` (étapes 2-3) | `pwd` pour voir où il est ; rappeler : étape 1 = ton projet, étapes 2-3 = le kit. |
 | Le dossier `legacy/` est vide après le clone | Submodule non récupéré | `git submodule update --init` dans le dossier cloné. |
-| `localhost:8080` ne répond pas | L'app n'est pas démarrée | Relancer le Docker du keiko. À défaut, l'étape 1 peut se faire en demandant à Claude de lire le code de la page. |
+| `localhost:8080` ne répond pas | L'app n'est pas démarrée | Relancer le Docker dans `keiko-ai-mod/legacy`. À défaut, l'étape 1 peut se faire en demandant à Claude de lire le code de la page. |
 | L'outil écrit la spec sans poser de questions | Il a « foncé » | Lui dire : « *Pose-moi les questions une par une avant d'écrire la spec.* » |
 | Le PM répond en termes techniques | Confusion de rôle | Recadrer : « réponds en métier : qui voit quoi, qu'est-ce qui s'affiche ? » |
 | Le PM invente des rôles/permissions | Le piège a fonctionné… trop bien | Faire ouvrir `analysis.md` : « où est-il écrit qu'il y a des rôles ? ». Le ranger en « hors legacy ». |
@@ -281,9 +298,13 @@ explicitement) les remarques.
   aucun des deux.
 - Le piège des rôles est intentionnel. Ne le « corrige » pas à l'avance : il est documenté honnêtement
   dans l'`analysis.md` (aucun rôle), c'est au PM de le découvrir et de trancher.
-- Récupération du dojo : au début de l'étape 2 (pas avant - l'étape 1 reste mains nues). Repo privé →
-  `gh repo clone Matigon-theodo/dojo-ai-pm-s2 -- --recurse-submodules`. Si ça réclame un mot de passe,
-  c'est l'auth git/gh (`gh auth login` + `gh auth setup-git`). Filet ultime : le `.zip` distribué (aucun git).
+- Deux dossiers, à marteler : l'étape 1 se fait dans **`keiko-ai-mod`** (le projet des S0/S1, sans skill),
+  l'étape 2 bascule sur **`dojo-ai-pm-s2`** (le kit). C'est la principale source de confusion - rappelle-le
+  au moment du clone.
+- Récupération du kit : au début de l'étape 2 (pas avant - l'étape 1 reste mains nues, sinon le skill
+  risquerait de se déclencher tout seul). Repo **public** → `git clone --recurse-submodules
+  https://github.com/Matigon-theodo/dojo-ai-pm-s2.git`, sans authentification. Si une machine réclame
+  quand même (réécriture SSH) : `gh auth login` + `gh auth setup-git`. Filet ultime : le `.zip` distribué.
 - Pour les curieux : le dossier `skills-a-explorer/` contient des copies de skills keiko (create-spec,
   grill-me, tracer, chaîne de production de code, agent de vérification) à parcourir. Ce ne sont pas les
   skills de la séance ; à proposer en bonus à ceux qui finissent en avance.
